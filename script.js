@@ -1,65 +1,86 @@
-// script.js
+// Modal to ask for the user's name
+const modal = document.getElementById('user-name-modal');
+const nameInput = document.getElementById('user-name');
+const submitNameBtn = document.getElementById('submit-name');
+let playerName = '';
+let consecutiveWins = 0;
+let maxConsecutiveWins = localStorage.getItem('maxWins') || 0;
+let leaderName = localStorage.getItem('leaderName') || 'No leader yet!';
 
-// Select all the cells, the status display, and the reset button
-const cells = document.querySelectorAll('.cell');
-const status = document.getElementById('status');
-const resetButton = document.getElementById('reset-button');
+document.getElementById('leaderboard-user').textContent = leaderName;
 
-let currentPlayer = 'X'; // Track the current player
-let gameActive = true; // Flag to check if the game is active
+// Show the modal on page load
+modal.style.display = 'block';
 
-// Add click event listeners to all cells
-cells.forEach(cell => {
-    cell.addEventListener('click', function() {
-        // If the cell already has a marker or the game is not active, do nothing
-        if (cell.textContent || !gameActive) return;
-
-        cell.textContent = currentPlayer; // Mark the cell with the current player's marker
-
-        if (checkWin()) { // Check if the current player has won
-            status.textContent = `Player ${currentPlayer} wins!`;
-            gameActive = false; // End the game
-            return;
-        }
-
-        if (Array.from(cells).every(cell => cell.textContent)) { // Check for a draw
-            status.textContent = "It's a draw!";
-            gameActive = false; // End the game
-            return;
-        }
-
-        // Switch to the other player
-        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
-        status.textContent = `Player ${currentPlayer}'s turn`;
-    });
+submitNameBtn.addEventListener('click', () => {
+  playerName = nameInput.value.trim();
+  if (playerName) {
+    modal.style.display = 'none';
+    startGame();
+  }
 });
 
-// Add click event listener to the reset button
-resetButton.addEventListener('click', function() {
-    cells.forEach(cell => cell.textContent = ''); // Clear all cells
-    currentPlayer = 'X'; // Reset to player X
-    status.textContent = `Player ${currentPlayer}'s turn`; // Update the status
-    gameActive = true; // Activate the game
-});
+function startGame() {
+  const board = document.getElementById('tic-tac-toe-board');
+  let currentPlayer = 'X';
+  let boardState = Array(9).fill(null);
+  let gameActive = true;
+  
+  board.innerHTML = '';
+  boardState.forEach((_, i) => {
+    const cell = document.createElement('div');
+    cell.addEventListener('click', () => makeMove(i, cell), { once: true });
+    board.appendChild(cell);
+  });
 
-// Function to check for a win
-function checkWin() {
-    const winConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
+  function makeMove(i, cell) {
+    if (!gameActive) return;
+    
+    boardState[i] = currentPlayer;
+    cell.textContent = currentPlayer;
+    
+    if (checkWinner()) {
+      document.getElementById('win-status').textContent = `${currentPlayer} wins!`;
+      if (currentPlayer === 'X') {
+        consecutiveWins++;
+        updateLeaderboard();
+      } else {
+        consecutiveWins = 0;
+      }
+      gameActive = false;
+      setTimeout(startGame, 2000);
+    } else if (boardState.every(Boolean)) {
+      document.getElementById('win-status').textContent = 'Draw!';
+      consecutiveWins = 0;
+      gameActive = false;
+      setTimeout(startGame, 2000);
+    } else {
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    }
+  }
+  
+  function checkWinner() {
+    const winningCombinations = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
     ];
-
-    // Check if any winning condition is met
-    return winConditions.some(condition => {
-        const [a, b, c] = condition;
-        return cells[a].textContent &&
-               cells[a].textContent === cells[b].textContent &&
-               cells[a].textContent === cells[c].textContent;
-    });
+    return winningCombinations.some(combination => 
+      combination.every(index => boardState[index] === currentPlayer)
+    );
+  }
 }
+
+function updateLeaderboard() {
+  if (consecutiveWins > maxConsecutiveWins) {
+    maxConsecutiveWins = consecutiveWins;
+    localStorage.setItem('maxWins', maxConsecutiveWins);
+    localStorage.setItem('leaderName', playerName);
+    document.getElementById('leaderboard-user').textContent = playerName;
+  }
+}
+
+// Load leaderboard on page load
+window.onload = () => {
+  document.getElementById('leaderboard-user').textContent = localStorage.getItem('leaderName') || 'No leader yet!';
+};
