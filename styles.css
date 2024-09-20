@@ -1,9 +1,15 @@
+/* General body styles */
 body {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #3debfe;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  justify-content: center;
+  text-align: center;
 }
 
 .modal {
@@ -19,15 +25,18 @@ body {
 }
 
 .modal-content {
-  background-color: #2cffbc;
+  background-color: #fff;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
+  width: 80%;
+  max-width: 400px;
 }
 
 input {
   padding: 10px;
   margin: 10px;
+  width: 80%;
   border-radius: 5px;
 }
 
@@ -37,23 +46,30 @@ button {
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
+button:hover {
+  background-color: #218838;
+}
+
+/* Leaderboard styles */
 .leaderboard {
   margin-top: 20px;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .board div {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  padding-top: 100%; /* This makes the cells square */
   background-color: #fff;
   display: flex;
   justify-content: center;
@@ -63,6 +79,30 @@ button {
   border: 1px solid #ddd;
 }
 
+/* Responsive styles */
+@media (max-width: 600px) {
+  .board {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    max-width: 300px;
+  }
+
+  .board div {
+    font-size: 18px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  button, input {
+    padding: 8px;
+    font-size: 16px;
+  }
+}
+
 #win-status {
   margin-top: 20px;
+  font-size: 18px;
 }
