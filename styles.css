@@ -105,3 +105,13 @@ button:hover {
   color: #ffffff; /* Deep red text */
   text-transform: uppercase;
 }
+
+footer {
+  text-align: center;
+  background-color: rgb(0, 0, 0);
+  color: rgb(247, 255, 10);
+
+  position: fixed;
+  bottom: -14px;
+  width: 100%;
+}
