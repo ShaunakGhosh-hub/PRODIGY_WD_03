@@ -1,15 +1,10 @@
-/* General body styles */
 body {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  justify-content: center;
-  text-align: center;
+  background-color: #db3434; /* Soft blue background */
+  background-image: linear-gradient(to bottom, yellow, purple); /* Gradient effect */
 }
 
 .modal {
@@ -21,88 +16,92 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  backdrop-filter: blur(5px); /* Blur effect */
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #f0f76f; /* Warm yellow background */
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
   text-align: center;
-  width: 80%;
-  max-width: 400px;
 }
 
 input {
   padding: 10px;
   margin: 10px;
-  width: 80%;
   border-radius: 5px;
+  border: 1px solid #890000; /* Light gray border */
+  background-color: #ffffff; /* Light gray background */
+  transition: background-color 0.2s ease-in-out; /* Transition effect */
+}
+
+input:focus {
+  background-color: #fff; /* White background on focus */
+  border-color: #3498db; /* Soft blue border on focus */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow effect on focus */
 }
 
 button {
   padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
+  background-color: #e74c3c; /* Deep red background */
+  color: #fff; /* White text */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out; /* Transition effect */
 }
 
 button:hover {
-  background-color: #218838;
+  background-color: #c0392b; /* Darker red background on hover */
 }
 
-/* Leaderboard styles */
 .leaderboard {
   margin-top: 20px;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: wavy;
+  font-size: 24px; /* Larger font size */
+  font-weight: bold; /* Bold font */
+  color: #000000; /* Bright green text */
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
   gap: 10px;
   margin-top: 20px;
-  width: 100%;
-  max-width: 400px;
+  background-color: rgb(137, 255, 180); /* Light gray background */
+  padding: 20px;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
 }
 
 .board div {
-  width: 100%;
-  padding-top: 100%; /* This makes the cells square */
-  background-color: #fff;
+  width: 100px;
+  height: 100px;
+  background-color: #fff; /* White background */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
   cursor: pointer;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Light gray border */
+  transition: background-color 0.2s ease-in-out; /* Transition effect */
 }
 
-/* Responsive styles */
-@media (max-width: 600px) {
-  .board {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    max-width: 300px;
-  }
-
-  .board div {
-    font-size: 18px;
-  }
-
-  .modal-content {
-    width: 90%;
-    padding: 15px;
-  }
-
-  button, input {
-    padding: 8px;
-    font-size: 16px;
-  }
+.board div:hover {
+  background-color: #bcedfb; /* Warm yellow background on hover */
 }
 
 #win-status {
-  margin-top: 20px;
-  font-size: 18px;
+  text-align: center;
+  margin-top: 50px;
+  font-size: 30px; /* Larger font size */
+  font-weight: bold; /* Bold font */
+  color: #ffffff; /* Deep red text */
+  text-transform: uppercase;
 }
