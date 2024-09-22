@@ -64,6 +64,7 @@ function makeMove(index, cell) {
       consecutiveWins++;
       updateLeaderboard();
     } else {
+       document.getElementById('win-status').textContent = 'HOW CAN YOU FUCKING LOSE TO A STUPID MACHINE YOU DUMBFUCK!!!!!';
       consecutiveWins = 0;
     }
     gameActive = false;
